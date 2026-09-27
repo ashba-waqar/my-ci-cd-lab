@@ -1,49 +1,63 @@
-name: CI/CD Pipeline with Docker
+name: CI/CD Pipeline - Lab 12
 
 on:
   push:
-    branches: [main, master]
-  pull_request:
-    branches: [main, master]
+    branches: [ main, master ]
 
 jobs:
-  build:
+  # 1. Build and Test Stage (CI)
+  build-and-test:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - name: Build Step
-        run: echo "Building the project..."
+      - name: Checkout code
+        uses: actions/checkout@v3
 
-  test:
-    needs: build
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - name: Test Step
-        run: echo "Running tests..."
-
-  docker-build-push:
-    needs: test
-    runs-on: ubuntu-latest
-    # Yahan permissions ko explicit write kar diya hai
-    permissions:
-      contents: read
-      packages: write
-      id-token: write
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: Log in to GitHub Container Registry
-        uses: docker/login-action@v3
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
         with:
-          registry: ghcr.io
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
+          node-version: '18'
 
-      - name: Build and push Docker image
-        uses: docker/build-push-action@v5
+      - name: Run Tests / Linter
+        run: echo "Running unit tests and code checks..."
+
+  # 2. Security Scanning Stage (Step 3)
+  security-scan:
+    needs: build-and-test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Run Trivy vulnerability scanner
+        uses: aquasecurity/trivy-action@master
         with:
-          context: .
-          push: true
-          # Image name ko lowercase kar diya hai taake ghcr.io error na de
-          tags: ghcr.io/${{ github.repository_owner }}/my-app:latest
+          scan-type: 'fs'
+          ignore-unfixed: true
+          severity: 'CRITICAL,HIGH'
+
+  # 3. Deploy to Development Environment (Step 4)
+  deploy-to-dev:
+    needs: security-scan
+    runs-on: ubuntu-latest
+    environment: development
+    steps:
+      - name: Deploy to Dev
+        run: echo "Deploying code to Development environment automatically."
+
+  # 4. Deploy to Staging Environment (Step 4)
+  deploy-to-staging:
+    needs: deploy-to-dev
+    runs-on: ubuntu-latest
+    environment: staging
+    steps:
+      - name: Deploy to Staging
+        run: echo "Deploying to Staging after passing checks."
+
+  # 5. Deploy to Production with Manual Approval (Step 4)
+  deploy-to-production:
+    needs: deploy-to-staging
+    runs-on: ubuntu-latest
+    environment: production
+    steps:
+      - name: Deploy to Production
+        run: echo "Deploying to Production after manual review approval."
