@@ -61,3 +61,19 @@ jobs:
     steps:
       - name: Deploy to Production
         run: echo "Deploying to Production after manual review approval."
+  # 6. Publish Build Artifacts (Step 5)
+  publish-artifact:
+    needs: deploy-to-production
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Upload Build Artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: web-app-files
+          path: |
+            index.html
+            style.css
+            index.js      
