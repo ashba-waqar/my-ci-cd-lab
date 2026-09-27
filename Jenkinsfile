@@ -4,12 +4,14 @@ pipeline {
     stages {
         stage('Checkout Code') {
             steps {
+                // Checkout code from the repository
                 checkout scm
             }
         }
         
         stage('Build Docker Image') {
             steps {
+                // Build the Docker image with a tag
                 sh "docker build -t lab-app:latest ."
             }
         }
@@ -17,11 +19,12 @@ pipeline {
         stage('Deploy Application') {
             steps {
                 script {
+                    // Stop and remove the old container if it exists
                     sh "docker stop running-app || true"
                     sh "docker rm running-app || true"
                     
-                    
-                    sh "docker run -d --name running-app -p 80:80 lab-app:latest"
+                    // Run the new container on port 8081 to avoid port 80 conflict
+                    sh "docker run -d --name running-app -p 8081:80 lab-app:latest"
                 }
             }
         }
@@ -29,7 +32,8 @@ pipeline {
     
     post {
         failure {
-            echo "Pipeline fail ho gayi hai!"
+            // Triggered if the pipeline fails
+            echo "Pipeline failed! Executing failure actions..."
         }
     }
 }
