@@ -1,4 +1,4 @@
-name: CI Pipeline
+name: CI/CD Pipeline with Docker
 
 on:
   push:
@@ -19,23 +19,28 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      
-      # Caching step add kar rahe hain lab ki requirement ke mutabiq
-      - name: Cache files
-        uses: actions/cache@v4
-        with:
-          path: ~/.npm
-          key: ${{ runner.os }}-node-${{ hashFiles('**/index.js') }}
-          restore-keys: |
-            ${{ runner.os }}-node-
-
       - name: Test Step
-        run: echo "Running tests successfully with caching!"
+        run: echo "Running tests..."
 
-  deploy:
+  docker-build-push:
     needs: test
-    if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
     steps:
-      - name: Deploy Step
-        run: echo "Deploying to production server..."
+      - uses: actions/checkout@v4
+
+      - name: Log in to GitHub Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          push: true
+          tags: ghcr.io/${{ github.repository }}/my-app:latest
