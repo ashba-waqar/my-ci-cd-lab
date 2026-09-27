@@ -23,8 +23,8 @@ pipeline {
                     sh "docker stop running-app || true"
                     sh "docker rm running-app || true"
                     
-                    // Run the new container on port 8081 to avoid port 80 conflict
-                    sh "docker run -d --name running-app -p 8081:80 lab-app:latest"
+                    // Run the new container on port 8082 to avoid port conflicts
+                    sh "docker run -d --name running-app -p 8082:80 lab-app:latest"
                 }
             }
         }
