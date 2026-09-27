@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MERAKI — Clothing</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- ===== Header ===== -->
+  <header class="site-header">
+    <div class="logo">Meraki</div>
+
+    <nav>
+      <ul class="nav-links">
+        <li><a href="#collection">Collection</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </nav>
+
+    <div class="header-actions">
+      <button class="cart-icon" aria-label="Open cart">
+        Bag <span class="cart-count">0</span>
+      </button>
+      <button class="menu-btn" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <!-- ===== Hero Slider ===== -->
+  <section class="hero">
+    <div class="slide active">
+      <div class="slide-text">
+        <p class="tag">New season</p>
+        <h1>Clothes built<br>for how you<br>actually move.</h1>
+        <a href="#collection" class="btn-primary">Shop the drop</a>
+      </div>
+    </div>
+    <div class="slide">
+      <div class="slide-text">
+        <p class="tag">Limited run</p>
+        <h1>Denim, re-cut<br>for every body.</h1>
+        <a href="#collection" class="btn-primary">See the fit</a>
+      </div>
+    </div>
+    <div class="slide">
+      <div class="slide-text">
+        <p class="tag">Just landed</p>
+        <h1>Softer knits.<br>Sharper lines.</h1>
+        <a href="#collection" class="btn-primary">Explore</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Collection ===== -->
+  <section id="collection" class="collection">
+    <div class="collection-heading">
+      <h2>The collection</h2>
+      <div class="filters">
+        <button class="filter-btn" data-category="All">All</button>
+        <button class="filter-btn" data-category="Men">Men</button>
+        <button class="filter-btn" data-category="Women">Women</button>
+        <button class="filter-btn" data-category="Kids">Kids</button>
+      </div>
+    </div>
+
+    <div class="product-grid"><!-- filled by index.js --></div>
+  </section>
+
+  <!-- ===== About ===== -->
+  <section id="about" class="about">
+    <p class="about-text">
+      Meraki started in a two-room workshop with one idea: clothes should feel
+      like they were made for the person wearing them, not the rack they hang on.
+      Every piece is cut in small batches and finished by hand.
+    </p>
+  </section>
+
+  <!-- ===== Footer ===== -->
+  <footer id="contact" class="site-footer">
+    <div>
+      <p class="footer-logo">Meraki</p>
+      <p>Lahore, Pakistan</p>
+    </div>
+    <div>
+      <p>hello@meraki.com</p>
+      <p>+92 300 0000000</p>
+    </div>
+  </footer>
+
+  <!-- ===== Cart Panel ===== -->
+  <aside class="cart-panel">
+    <div class="cart-header">
+      <h3>Your bag</h3>
+      <button class="cart-icon" aria-label="Close cart">✕</button>
+    </div>
+    <div class="cart-items"><!-- filled by index.js --></div>
+    <div class="cart-footer">
+      <div class="cart-total-row">
+        <span>Total</span>
+        <span class="cart-total">Rs. 0</span>
+      </div>
+      <button class="btn-primary checkout-btn">Checkout</button>
+    </div>
+  </aside>
+
+  <script src="index.js"></script>
+</body>
+</html>
