@@ -1,114 +1,166 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>MERAKI — Clothing</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css" />
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>ÉCRU — Considered Clothing</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css" />
 </head>
 <body>
 
-  <!-- ===== Header ===== -->
-  <header class="site-header">
-    <div class="logo">Meraki</div>
+<!-- ===== Header ===== -->
+<header class="site-header">
+  <button class="menu-btn" aria-label="Open menu">
+    <span></span><span></span><span></span>
+  </button>
 
-    <nav>
-      <ul class="nav-links">
-        <li><a href="#collection">Collection</a></li>
-        <li><a href="#about">About</a></li>
-        <li><a href="#contact">Contact</a></li>
-      </ul>
-    </nav>
+  <nav class="nav-links">
+    <a href="#new-arrivals">New Arrivals</a>
+    <a href="#collections">Collections</a>
+    <a href="#casual">Casual Wear</a>
+  </nav>
 
-    <div class="header-actions">
-      <button class="cart-icon" aria-label="Open cart">
-        Bag <span class="cart-count">0</span>
-      </button>
-      <button class="menu-btn" aria-label="Toggle menu">
-        <span></span><span></span><span></span>
-      </button>
+  <a href="#" class="logo">ÉCRU</a>
+
+  <div class="header-icons">
+    <button class="icon-btn search-btn" aria-label="Search">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.2" y2="16.2"/></svg>
+    </button>
+    <button class="icon-btn wishlist-btn" aria-label="Wishlist">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M12 20.5s-7.5-4.6-9.8-9C.6 8 2 4.5 5.4 4c2-.3 3.8.7 4.6 2.3C10.8 4.7 12.6 3.7 14.6 4c3.4.5 4.8 4 3.2 7.5-2.3 4.4-9.8 9-9.8 9z"/></svg>
+    </button>
+    <button class="icon-btn cart-icon" aria-label="Open cart">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M6 8h12l-1 12H7L6 8z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg>
+      <span class="cart-count">0</span>
+    </button>
+  </div>
+</header>
+
+<!-- ===== Mobile Nav Overlay ===== -->
+<div class="mobile-nav">
+  <button class="close-btn" aria-label="Close menu">&times;</button>
+  <a href="#new-arrivals">New Arrivals</a>
+  <a href="#collections">Collections</a>
+  <a href="#casual">Casual Wear</a>
+</div>
+
+<!-- ===== Search Overlay ===== -->
+<div class="search-overlay">
+  <div class="search-box">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.2" y2="16.2"/></svg>
+    <input type="text" placeholder="Search products..." />
+    <button class="close-btn" aria-label="Close search">&times;</button>
+  </div>
+</div>
+
+<!-- ===== Hero ===== -->
+<section class="hero">
+  <img class="hero-img" src="https://images.unsplash.com/photo-1490481651871-ab68de25d43d?q=80&w=1600&auto=format&fit=crop" alt="Editorial fashion look" />
+  <div class="hero-content">
+    <p class="eyebrow">Autumn / Winter 2026</p>
+    <h1>The&nbsp;Edit.</h1>
+    <p class="hero-copy">Considered pieces for a quieter kind of luxury.</p>
+    <a href="#new-arrivals" class="btn-solid">Shop Now</a>
+  </div>
+</section>
+
+<!-- ===== Categories ===== -->
+<section id="collections" class="categories">
+  <h2 class="section-heading">Shop by Category</h2>
+  <div class="category-grid">
+    <a href="#new-arrivals" class="category-card">
+      <img src="https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?q=80&w=700&auto=format&fit=crop" alt="New Arrivals" />
+      <span class="category-label">New Arrivals</span>
+    </a>
+    <a href="#new-arrivals" class="category-card">
+      <img src="https://images.unsplash.com/photo-1485230895905-ec40ba36b9bc?q=80&w=700&auto=format&fit=crop" alt="Luxury Pret" />
+      <span class="category-label">Luxury Pret</span>
+    </a>
+    <a href="#casual" class="category-card">
+      <img src="https://images.unsplash.com/photo-1539109136881-3be0616acf4b?q=80&w=700&auto=format&fit=crop" alt="Casual Wear" />
+      <span class="category-label">Casual Wear</span>
+    </a>
+  </div>
+</section>
+
+<!-- ===== Product Grid ===== -->
+<section id="new-arrivals" class="product-section">
+  <div class="section-header-row">
+    <h2 class="section-heading">New Arrivals</h2>
+    <div class="filters">
+      <button class="filter-btn active" data-category="All">All</button>
+      <button class="filter-btn" data-category="New Arrivals">New Arrivals</button>
+      <button class="filter-btn" data-category="Luxury Pret">Luxury Pret</button>
+      <button class="filter-btn" data-category="Casual Wear">Casual Wear</button>
     </div>
-  </header>
+  </div>
 
-  <!-- ===== Hero Slider ===== -->
-  <section class="hero">
-    <div class="slide active">
-      <div class="slide-text">
-        <p class="tag">New season</p>
-        <h1>Clothes built<br>for how you<br>actually move.</h1>
-        <a href="#collection" class="btn-primary">Shop the drop</a>
+  <div class="product-grid"><!-- filled by index.js --></div>
+</section>
+
+<!-- ===== Footer ===== -->
+<footer id="casual" class="site-footer">
+  <div class="footer-top">
+    <div class="footer-brand">
+      <p class="footer-logo">ÉCRU</p>
+      <p>Considered clothing, made to last.</p>
+    </div>
+
+    <div class="footer-links">
+      <div>
+        <h4>Shop</h4>
+        <a href="#new-arrivals">New Arrivals</a>
+        <a href="#collections">Luxury Pret</a>
+        <a href="#new-arrivals">Casual Wear</a>
+      </div>
+      <div>
+        <h4>Help</h4>
+        <a href="#">Shipping</a>
+        <a href="#">Returns</a>
+        <a href="#">Contact</a>
       </div>
     </div>
-    <div class="slide">
-      <div class="slide-text">
-        <p class="tag">Limited run</p>
-        <h1>Denim, re-cut<br>for every body.</h1>
-        <a href="#collection" class="btn-primary">See the fit</a>
-      </div>
-    </div>
-    <div class="slide">
-      <div class="slide-text">
-        <p class="tag">Just landed</p>
-        <h1>Softer knits.<br>Sharper lines.</h1>
-        <a href="#collection" class="btn-primary">Explore</a>
-      </div>
-    </div>
-  </section>
 
-  <!-- ===== Collection ===== -->
-  <section id="collection" class="collection">
-    <div class="collection-heading">
-      <h2>The collection</h2>
-      <div class="filters">
-        <button class="filter-btn" data-category="All">All</button>
-        <button class="filter-btn" data-category="Men">Men</button>
-        <button class="filter-btn" data-category="Women">Women</button>
-        <button class="filter-btn" data-category="Kids">Kids</button>
-      </div>
+    <div class="footer-newsletter">
+      <h4>Stay in the loop</h4>
+      <p>Sign up for early access to new drops.</p>
+      <form class="newsletter-form">
+        <input type="email" placeholder="Your email" required />
+        <button type="submit">Subscribe</button>
+      </form>
+      <p class="newsletter-msg"></p>
     </div>
+  </div>
 
-    <div class="product-grid"><!-- filled by index.js --></div>
-  </section>
-
-  <!-- ===== About ===== -->
-  <section id="about" class="about">
-    <p class="about-text">
-      Meraki started in a two-room workshop with one idea: clothes should feel
-      like they were made for the person wearing them, not the rack they hang on.
-      Every piece is cut in small batches and finished by hand.
-    </p>
-  </section>
-
-  <!-- ===== Footer ===== -->
-  <footer id="contact" class="site-footer">
-    <div>
-      <p class="footer-logo">Meraki</p>
-      <p>Lahore, Pakistan</p>
+  <div class="footer-bottom">
+    <p>&copy; 2026 ÉCRU. All rights reserved.</p>
+    <div class="social-links">
+      <a href="#">Instagram</a>
+      <a href="#">Pinterest</a>
+      <a href="#">TikTok</a>
     </div>
-    <div>
-      <p>hello@meraki.com</p>
-      <p>+92 300 0000000</p>
-    </div>
-  </footer>
+  </div>
+</footer>
 
-  <!-- ===== Cart Panel ===== -->
-  <aside class="cart-panel">
-    <div class="cart-header">
-      <h3>Your bag</h3>
-      <button class="cart-icon" aria-label="Close cart">✕</button>
+<!-- ===== Cart Panel ===== -->
+<aside class="cart-panel">
+  <div class="cart-header">
+    <h3>Your Bag</h3>
+    <button class="cart-icon close-btn" aria-label="Close cart">&times;</button>
+  </div>
+  <div class="cart-items"><!-- filled by index.js --></div>
+  <div class="cart-footer">
+    <div class="cart-total-row">
+      <span>Subtotal</span>
+      <span class="cart-total">Rs. 0</span>
     </div>
-    <div class="cart-items"><!-- filled by index.js --></div>
-    <div class="cart-footer">
-      <div class="cart-total-row">
-        <span>Total</span>
-        <span class="cart-total">Rs. 0</span>
-      </div>
-      <button class="btn-primary checkout-btn">Checkout</button>
-    </div>
-  </aside>
+    <button class="btn-solid checkout-btn">Checkout</button>
+  </div>
+</aside>
+<div class="cart-backdrop"></div>
 
-  <script src="index.js"></script>
+<script src="index.js"></script>
 </body>
 </html>
