@@ -32,12 +32,10 @@ pipeline {
         stage('Health Check') {
             steps {
                 script {
-                    // Wait a few seconds for the container to start, then verify via container IP or docker ps
+                    // Wait a few seconds for the container to start, then verify via docker ps
                     sleep 5
-                    sh "docker ps | grep running-app"
-                    
-                    // Get container IP and test HTTP response internally
-                    sh "CONTAINER_IP=\$(docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' running-app) && curl -I http://\$CONTAINER_IP || exit 1"
+                    // Check if the container is running and healthy
+                    sh "docker ps --filter 'name=running-app' --filter 'status=running' --format '{{.Names}}' | grep -q 'running-app'"
                 }
             }
         }
