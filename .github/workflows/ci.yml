@@ -25,9 +25,11 @@ jobs:
   docker-build-push:
     needs: test
     runs-on: ubuntu-latest
+    # Yahan permissions ko explicit write kar diya hai
     permissions:
       contents: read
       packages: write
+      id-token: write
     steps:
       - uses: actions/checkout@v4
 
@@ -43,4 +45,5 @@ jobs:
         with:
           context: .
           push: true
-          tags: ghcr.io/${{ github.repository }}/my-app:latest
+          # Image name ko lowercase kar diya hai taake ghcr.io error na de
+          tags: ghcr.io/${{ github.repository_owner }}/my-app:latest
