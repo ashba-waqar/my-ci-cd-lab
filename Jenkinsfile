@@ -43,17 +43,19 @@ pipeline {
     
     post {
         success {
-            // Actions performed if the pipeline succeeds
-            echo "Pipeline succeeded! Application deployed and verified successfully."
+            // Final success notification and cleanup
+            echo "Lab 14 Completed Successfully! All stages passed without errors."
+            cleanWs()
         }
         failure {
-            // Actions performed if the pipeline fails (Rollback mechanism)
+            // Rollback mechanism in case of failure
             echo "Pipeline failed! Initiating rollback process..."
             script {
                 sh "docker stop running-app || true"
                 sh "docker rm running-app || true"
-                echo "Rollback steps completed. Please check logs for details."
+                echo "Rollback steps completed."
             }
+            cleanWs()
         }
     }
 }
