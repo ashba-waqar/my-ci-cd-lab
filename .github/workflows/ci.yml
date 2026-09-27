@@ -7,9 +7,35 @@ on:
     branches: [main, master]
 
 jobs:
-  build-and-test:
+  build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Run a simple message step
-        run: echo "Hello! My GitHub Actions workflow is running successfully."
+      - name: Build Step
+        run: echo "Building the project..."
+
+  test:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      # Caching step add kar rahe hain lab ki requirement ke mutabiq
+      - name: Cache files
+        uses: actions/cache@v4
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/index.js') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+
+      - name: Test Step
+        run: echo "Running tests successfully with caching!"
+
+  deploy:
+    needs: test
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy Step
+        run: echo "Deploying to production server..."
