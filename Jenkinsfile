@@ -1,12 +1,59 @@
-stage('Deploy Application') {
-    steps {
-        script {
-            // Purane container ko stop aur remove karein
-            sh "docker stop running-app || true"
-            sh "docker rm running-app || true"
-            
-            // Naya container run karein. Agar app khud exit ho rahi hai, tou tail -f /dev/null laga kar zinda rakh sakte hain:
-            sh "docker run -d --name running-app -p 8082:80 lab-app:latest"
+pipeline {
+    agent any
+    
+    stages {
+        stage('Checkout Code') {
+            steps {
+                // Checkout code from the GitHub repository
+                checkout scm
+            }
+        }
+        
+        stage('Build Docker Image') {
+            steps {
+                // Build the new Docker image with a tag
+                sh "docker build -t lab-app:latest ."
+            }
+        }
+        
+        stage('Deploy Application') {
+            steps {
+                script {
+                    // Stop and remove the old container if it exists
+                    sh "docker stop running-app || true"
+                    sh "docker rm running-app || true"
+                    
+                    // Run the new container and keep it alive using node or sleep
+                    sh "docker run -d --name running-app -p 8082:80 lab-app:latest sh -c 'node index.js || sleep infinity'"
+                }
+            }
+        }
+        
+        stage('Health Check') {
+            steps {
+                script {
+                    // Wait a few seconds for the container to start
+                    sleep 3
+                    // Verify that the container is successfully created and running
+                    sh "docker inspect running-app"
+                }
+            }
+        }
+    }
+    
+    post {
+        success {
+            // Actions performed if the pipeline succeeds
+            echo "Pipeline succeeded! Application deployed and verified successfully."
+        }
+        failure {
+            // Actions performed if the pipeline fails (Rollback mechanism)
+            echo "Pipeline failed! Initiating rollback process..."
+            script {
+                sh "docker stop running-app || true"
+                sh "docker rm running-app || true"
+                echo "Rollback steps completed. Please check logs for details."
+            }
         }
     }
 }
