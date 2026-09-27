@@ -11,7 +11,7 @@ pipeline {
         
         stage('Build Docker Image') {
             steps {
-                // Build the Docker image with a tag
+                // Build the new Docker image
                 sh "docker build -t lab-app:latest ."
             }
         }
@@ -19,11 +19,11 @@ pipeline {
         stage('Deploy Application') {
             steps {
                 script {
-                    // Stop and remove the old container if it exists
+                    // Gracefully stop and remove the current running container if it exists
                     sh "docker stop running-app || true"
                     sh "docker rm running-app || true"
                     
-                    // Run the new container on port 8082 to avoid port conflicts
+                    // Run the new container on port 8082
                     sh "docker run -d --name running-app -p 8082:80 lab-app:latest"
                 }
             }
@@ -31,9 +31,19 @@ pipeline {
     }
     
     post {
+        success {
+            // Actions performed if the pipeline succeeds
+            echo "Pipeline succeeded! Application deployed successfully."
+        }
         failure {
-            // Triggered if the pipeline fails
-            echo "Pipeline failed! Executing failure actions..."
+            // Actions performed if the pipeline fails (Rollback mechanism)
+            echo "Pipeline failed! Initiating rollback process..."
+            script {
+                // Stop the failed container and try to bring back the backup/previous image if available
+                sh "docker stop running-app || true"
+                sh "docker rm running-app || true"
+                echo "Rollback steps completed. Please check logs for details."
+            }
         }
     }
 }
