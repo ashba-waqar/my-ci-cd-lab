@@ -19,7 +19,7 @@ pipeline {
         stage('Deploy Application') {
             steps {
                 script {
-                    // Gracefully stop and remove the current running container if it exists
+                    // Stop and remove the old container if it exists
                     sh "docker stop running-app || true"
                     sh "docker rm running-app || true"
                     
@@ -28,18 +28,27 @@ pipeline {
                 }
             }
         }
+        
+        stage('Health Check') {
+            steps {
+                script {
+                    // Wait a few seconds for the container to start, then verify response
+                    sleep 5
+                    sh "curl -I http://localhost:8082 || exit 1"
+                }
+            }
+        }
     }
     
     post {
         success {
             // Actions performed if the pipeline succeeds
-            echo "Pipeline succeeded! Application deployed successfully."
+            echo "Pipeline succeeded! Application deployed and verified successfully."
         }
         failure {
             // Actions performed if the pipeline fails (Rollback mechanism)
             echo "Pipeline failed! Initiating rollback process..."
             script {
-                // Stop the failed container and try to bring back the backup/previous image if available
                 sh "docker stop running-app || true"
                 sh "docker rm running-app || true"
                 echo "Rollback steps completed. Please check logs for details."
