@@ -1,0 +1,17 @@
+name: Production Deployment
+
+on:
+  push:
+    branches: [main, master]
+
+jobs:
+  deploy-to-production:
+    runs-on: ubuntu-latest
+    environment: 
+      name: production
+      url: https://my-production-url.com
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Run deployment script
+        run: echo "Deploying approved changes to production environment..."
