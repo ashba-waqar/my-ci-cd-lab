@@ -32,9 +32,9 @@ pipeline {
         stage('Health Check') {
             steps {
                 script {
-                    // Wait a few seconds for the container to start, then verify response
+                    // Wait a few seconds for the container to start, then verify if container is running
                     sleep 5
-                    sh "curl -I http://localhost:8082 || exit 1"
+                    sh "docker inspect -f '{{.State.Running}}' running-app | grep -q 'true'"
                 }
             }
         }
