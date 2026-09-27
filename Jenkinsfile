@@ -32,10 +32,18 @@ pipeline {
         stage('Health Check') {
             steps {
                 script {
-                    // Wait a few seconds for the container to start, then verify via docker ps
+                    // Wait a few seconds for the container to start
                     sleep 5
-                    // Check if the container is running and healthy
-                    sh "docker ps --filter 'name=running-app' --filter 'status=running' --format '{{.Names}}' | grep -q 'running-app'"
+                    
+                    // Print container status and logs for debugging if it fails
+                    sh "docker inspect running-app || true"
+                    sh "docker logs running-app || true"
+                    
+                    // Verify if container is up (checking both running or just checking existence if it's a quick task)
+                    def containerStatus = sh(script: "docker inspect -f '{{.State.Running}}' running-app", returnStdout: true).trim()
+                    if (containerStatus != "true") {
+                        error("Container is not running!")
+                    }
                 }
             }
         }
@@ -43,16 +51,14 @@ pipeline {
     
     post {
         success {
-            // Actions performed if the pipeline succeeds
             echo "Pipeline succeeded! Application deployed and verified successfully."
         }
         failure {
-            // Actions performed if the pipeline fails (Rollback mechanism)
             echo "Pipeline failed! Initiating rollback process..."
             script {
                 sh "docker stop running-app || true"
                 sh "docker rm running-app || true"
-                echo "Rollback steps completed. Please check logs for details."
+                echo "Rollback steps completed."
             }
         }
     }
