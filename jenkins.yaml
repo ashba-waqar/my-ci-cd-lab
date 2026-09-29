@@ -1,0 +1,13 @@
+jenkins:
+  systemMessage: "Configured by Jenkins Configuration as Code (JCasC) Lab"
+  numExecutors: 2
+  scmCheckoutRetryCount: 2
+  mode: NORMAL
+
+unclassified:
+  location:
+    url: http://localhost:8080/
+
+security:
+  gitHostKeyVerificationConfiguration:
+    hostKeyVerificationStrategy: "ACCEPT_FIRST_CONNECTION"
